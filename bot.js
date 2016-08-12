@@ -1,10 +1,17 @@
 'use strict';
 
 const TelegramBot = require('node-telegram-bot-api');
-const config = require('./config.json');
 const numeral = require('hebrew-numerals');
 
-const token = config.token;
+const getToken = () => {
+    try {
+        return require('./config.json').token;
+    } catch (e) {
+        return process.env.TOKEN;
+    }
+};
+
+const token = getToken();
 const ntt = numeral.numberToText;
 
 const bot = new TelegramBot(token, {polling: true});
