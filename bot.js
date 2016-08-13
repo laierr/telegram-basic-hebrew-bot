@@ -1,7 +1,7 @@
 'use strict';
 
 const TelegramBot = require('node-telegram-bot-api');
-const numeral = require('hebrew-numerals');
+const ntt = require('hebrew-numerals').numberToText;
 
 const getToken = () => {
     try {
@@ -12,14 +12,13 @@ const getToken = () => {
 };
 
 const token = getToken();
-const ntt = numeral.numberToText;
 
 const bot = new TelegramBot(token, {polling: true});
 
 var users = {};
 
 const greeter = (id) => {
-  bot.sendMessage(id, 'שלום\nAvaliable commands:\n/start or /help - This message\n/number - gives you number in hebrew, wating for numeric input\n/ntt [number] - converts number to text (For example, "/ntt 42" returns "arbaim veshtaim")');
+  bot.sendMessage(id, 'שלום\nAvaliable commands:\n/start or /help - This message\n/number - gives you number in hebrew, wating for numeric input\n/ntt [number] - converts number to text (for example, "/ntt 42" returns "arbaim veshtaim")');
 }
 
 const checkMsg = (id, msg) => {
@@ -78,7 +77,7 @@ bot.onText(/\/ntt (.+)/, (msg, match) => {
   if (typeof input === 'number' && input >= 0 && input < 1000) {
     bot.sendMessage(msg.from.id, ntt(input));
   } else {
-    bot.sendMessage(msg.from.id, 'Sorry, I accept only numbers in range of 0-999.');
+    bot.sendMessage(msg.from.id, 'Sorry, I accept only numbers in range from 0 to 999.');
   }
 });
 
