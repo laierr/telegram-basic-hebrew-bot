@@ -117,7 +117,7 @@ bot.on('message', (msg) => {
 });
 // Matches /echo [whatever]
 bot.onText(/\/echo (.+)/, (msg, match) => {
-  var fromId = msg.from.id;
+  var fromId = msg.chat.id;
   var resp = match[1];
   bot.sendMessage(fromId, resp);
 });
