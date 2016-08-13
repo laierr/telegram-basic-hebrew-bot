@@ -55,12 +55,12 @@ const numeralCheck = (id, msg) => {
 
 //Every Message Parser
 bot.on('message', (msg) => {
-  checkMsg(msg.from.id, msg.text);
+  checkMsg(msg.chat.id, msg.text);
 });
 
 // /number trigger
 bot.onText(/(\/number)/, (msg, match) => {
-  const id = msg.from.id;
+  const id = msg.chat.id;
   const rnd = Math.floor(Math.random() * 999);
 
   if(users[id]['state'] === 'numeral') {
@@ -75,16 +75,16 @@ bot.onText(/(\/number)/, (msg, match) => {
 bot.onText(/\/ntt (.+)/, (msg, match) => {
   const input = parseInt(match[1], 10);
   if (typeof input === 'number' && input >= 0 && input < 1000) {
-    bot.sendMessage(msg.from.id, ntt(input));
+    bot.sendMessage(msg.chat.id, ntt(input));
   } else {
-    bot.sendMessage(msg.from.id, 'Sorry, I accept only numbers in range from 0 to 999.');
+    bot.sendMessage(msg.chat.id, 'Sorry, I accept only numbers in range from 0 to 999.');
   }
 });
 
 
 //Greeting and Help
 bot.onText(/\/start|\/help/, (msg, match) => {
-  greeter(msg.from.id);
+  greeter(msg.chat.id);
 });
 
 //debug and logging
