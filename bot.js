@@ -19,7 +19,7 @@ const bot = new TelegramBot(token, {polling: true});
 var users = {};
 
 const greeter = (id) => {
-  bot.sendMessage(id, 'שלום\nAvaliable commands:\n/start or /help - This message\n/number - gives you number in hebrew, wating for numeric input');
+  bot.sendMessage(id, 'שלום\nAvaliable commands:\n/start or /help - This message\n/number - gives you number in hebrew, wating for numeric input\n/ntt [number] - converts number to text (For example, "/ntt 42" returns "arbaim veshtaim")');
 }
 
 const checkMsg = (id, msg) => {
@@ -69,7 +69,16 @@ bot.onText(/(\/number)/, (msg, match) => {
   } else {
     users[id]['state'] = 'numeral';
     users[id]['answer'] = rnd;
-    bot.sendMessage(id, ntt(users[id]['answer']))
+    bot.sendMessage(id, ntt(users[id]['answer']));
+  }
+});
+// converts number to text on request
+bot.onText(/\/ntt (.+)/, (msg, match) => {
+  const input = parseInt(match[1], 10);
+  if (typeof input === 'number' && input >= 0 && input < 1000) {
+    bot.sendMessage(msg.from.id, ntt(input));
+  } else {
+    bot.sendMessage(msg.from.id, 'Sorry, I accept only numbers in range of 0-999.');
   }
 });
 
