@@ -25,7 +25,7 @@ const checkMsg = (id, msg) => {
 // check if we know this user, creates new entry
   if (!users[id]) {
     users[id] = {'state': 'none'};
-    console.log('New user!');
+    console.log('New user: ' + id);
   };
 // shows help, if we expect command
   if (users[id]['state'] === 'none' && msg[0] != '/') {
@@ -39,7 +39,7 @@ const checkMsg = (id, msg) => {
   };
 }
 
-const numeralCheck = (id,msg) => {
+const numeralCheck = (id, msg) => {
 
   if (users[id]['answer'] === parseInt(msg, 10)) {
     bot.sendMessage(id, 'Correct! Try another /number?');
@@ -93,6 +93,11 @@ console.log('Bot is up and running!');
 //logs user base
 bot.onText(/\/users/, (msg, match) => {
   console.log(users);
+});
+
+//dumps raw message data to log
+bot.onText(/\/dumpmsg/, (msg, match) => {
+  console.log(msg);
 });
 
 //logs user input
